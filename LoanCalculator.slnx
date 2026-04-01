@@ -1,3 +1,12 @@
 <Solution>
+  <Folder Name="/database/">
+    <File Path="01_create_database.sql" />
+    <File Path="02_tables.sql" />
+    <File Path="03_seed_data.sql" />
+    <File Path="04_stored_procedures.sql" />
+  </Folder>
+  <Project Path="LoanCalculator.Application/LoanCalculator.Application.csproj" />
+  <Project Path="LoanCalculator.Domain/LoanCalculator.Domain.csproj" />
+  <Project Path="LoanCalculator.Infrastructure/LoanCalculator.Infrastructure.csproj" />
   <Project Path="LoanCalculator.Web/LoanCalculator.Web.csproj" />
 </Solution>

@@ -1,7 +1,13 @@
+using LoanCalculator.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<SqlConnectionFactory>();
+builder.Services.AddScoped<LoanRepository>();
 
 var app = builder.Build();
 
