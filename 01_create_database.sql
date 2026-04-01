@@ -1,0 +1,2 @@
+CREATE DATABASE LoanCalculator;
+GO
