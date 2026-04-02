@@ -22,3 +22,4 @@ appsettings.Local.json
 ## Logs
 logs/
 *.log
+!LoanCalculator.Web/Views/Logs/

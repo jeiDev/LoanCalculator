@@ -1,33 +1,33 @@
+using LoanCalculator.Application.Services;
+using LoanCalculator.Infrastructure.Interfaces;
+using LoanCalculator.Infrastructure.Repositories;
 using LoanCalculator.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<DatabaseInitializer>();
 builder.Services.AddScoped<SqlConnectionFactory>();
-builder.Services.AddScoped<LoanRepository>();
+
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<LoanService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<DatabaseInitializer>();
+    dbInitializer.Initialize();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Loan}/{action=Index}/{id?}");
 
 app.Run();

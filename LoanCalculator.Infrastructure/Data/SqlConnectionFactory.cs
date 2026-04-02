@@ -5,11 +5,11 @@ namespace LoanCalculator.Infrastructure.Data
 {
     public class SqlConnectionFactory
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = string.Empty;
 
         public SqlConnectionFactory(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("DefaultConnection")!;
         }
 
         public SqlConnection CreateConnection()

@@ -1,0 +1,137 @@
+@model LoanCalculator.Domain.Entities.PagedResult<LoanCalculator.Domain.Entities.LoanLog>
+
+<div class="container mt-5">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="text-4xl font-extrabold text-on-surface font-headline tracking-tighter">Registro de Logs</h1>
+            <p class="text-on-surface-variant mt-1 font-medium tracking-tight">
+                Historial de todas las solicitudes de
+                préstamos procesadas
+            </p>
+        </div>
+        <a href="/">
+            <button class="flex items-center gap-2 bg-gradient-to-br from-primary to-primary-container text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm hover:opacity-90 transition-all scale-98 active:opacity-80">
+                Volver a calculadora
+            </button>
+        </a>
+    </div>
+
+    <div class="overflow-x-auto no-scrollbar">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-surface-container-low/30 border-b border-outline-variant/10">
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Timestamp
+                    </th>
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Age
+                    </th>
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Amount
+                    </th>
+
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Months
+                    </th>
+
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Monthly Payment
+                    </th>
+                        
+                            
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Ip Address
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/5">
+                @if (Model?.Data == null)
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">No logs found</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var log in Model.Data)
+                    {
+                        <tr class="hover:bg-surface-container-low/20 transition-colors">
+                            <td class="px-6 py-5 whitespace-nowrap">
+                                <div class="text-sm font-semibold text-on-surface">@log.QueryDate.ToString("yyyy-MM-dd HH:mm")</div>
+                            </td>
+                            <td class="px-6 py-5">
+                                <p class="text-sm font-medium text-on-surface">@log.Age años</p>
+                            </td>
+                            <td class="px-6 py-5">
+                                <p class="text-sm font-medium text-on-surface">$@log.Amount.ToString("N2")</p>
+                            </td>
+                            <td class="px-6 py-5">
+                                <p class="text-sm font-medium text-on-surface">@log.Months meses</p>
+                            </td>
+                            <td class="px-6 py-5">
+                                <p class="text-sm font-medium text-primary font-semibold">
+                                    $@log.MonthlyPayment.ToString("N2")
+                                </p>
+                            </td>
+                            <td class="px-6 py-5">
+                                <code class="text-xs font-mono bg-surface-container p-1 rounded">@log.IpAddress</code>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @{
+        var startRecord = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+        var endRecord = Math.Min(Model.PageNumber * Model.PageSize, Model.TotalRecords);
+    }
+
+    <div class="px-6 py-4 flex items-center justify-between bg-surface-container-low/20 border-t border-outline-variant/10">
+        <p class="text-xs font-medium text-on-surface-variant">
+            Showing @startRecord to @endRecord of @Model.TotalRecords entries
+        </p>
+
+        <div class="flex items-center gap-1">
+            <a href="/Logs?page=@(Model.PageNumber - 1)"
+                   class="p-2 rounded-lg hover:bg-surface-container transition-colors @(Model.PageNumber == 1 ? "opacity-30 pointer-events-none" : "")">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </a>
+
+            @{
+                int startPage = Math.Max(1, Model.PageNumber - 2);
+                int endPage = Math.Min(Model.TotalPages, Model.PageNumber + 2);
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                if (i == Model.PageNumber)
+                {
+                    <a href="/Logs?page=@i"
+                       class="px-3.5 py-1.5 rounded-lg bg-primary text-white text-xs font-bold shadow-sm">@i</a>
+                }
+                else
+                {
+                    <a href="/Logs?page=@i"
+                       class="px-3.5 py-1.5 rounded-lg hover:bg-surface-container text-on-surface text-xs font-bold transition-colors">@i</a>
+                }
+            }
+
+            @if (endPage < Model.TotalPages)
+            {
+                <span class="px-2">...</span>
+                <a href="/Logs?page=@Model.TotalPages"
+                       class="px-3.5 py-1.5 rounded-lg hover:bg-surface-container text-on-surface text-xs font-bold transition-colors">
+                    @Model.TotalPages
+                </a>
+            }
+
+            <a href="/Logs?page=@(Model.PageNumber + 1)"
+                   class="p-2 rounded-lg hover:bg-surface-container transition-colors @(Model.PageNumber == Model.TotalPages ? "opacity-30 pointer-events-none" : "")">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+
+        </div>
+    </div>
+</div>

@@ -7,6 +7,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="database\01_create_database.sql" />
+    <None Remove="database\02_tables.sql" />
+    <None Remove="database\03_seed_data.sql" />
+    <None Remove="database\04_stored_procedures.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="database\01_create_database.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database\02_tables.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database\03_seed_data.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="database\04_stored_procedures.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoanCalculator.Application\LoanCalculator.Application.csproj" />
+    <ProjectReference Include="..\LoanCalculator.Domain\LoanCalculator.Domain.csproj" />
     <ProjectReference Include="..\LoanCalculator.Infrastructure\LoanCalculator.Infrastructure.csproj" />
   </ItemGroup>
 
