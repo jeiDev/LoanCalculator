@@ -9,11 +9,6 @@
                 préstamos procesadas
             </p>
         </div>
-        <a href="/">
-            <button class="flex items-center gap-2 bg-gradient-to-br from-primary to-primary-container text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm hover:opacity-90 transition-all scale-98 active:opacity-80">
-                Volver a calculadora
-            </button>
-        </a>
     </div>
 
     <div class="overflow-x-auto no-scrollbar">
@@ -21,26 +16,26 @@
             <thead>
                 <tr class="bg-surface-container-low/30 border-b border-outline-variant/10">
                     <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Timestamp
+                        Fecha y hora
                     </th>
                     <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Age
+                        Edad
                     </th>
                     <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Amount
-                    </th>
-
-                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Months
+                        Monto
                     </th>
 
                     <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Monthly Payment
+                        Meses
+                    </th>
+
+                    <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
+                        Pago mensual
                     </th>
                         
                             
                     <th class="px-6 py-4 text-[11px] font-extrabold text-on-surface-variant uppercase tracking-[0.1em]">
-                        Ip Address
+                        Direccion IP
                     </th>
                 </tr>
             </thead>
@@ -48,7 +43,7 @@
                 @if (Model?.Data == null)
                 {
                     <tr>
-                        <td colspan="6" class="text-center">No logs found</td>
+                        <td colspan="6" class="text-center">No se encontraron registros</td>
                     </tr>
                 }
                 else
@@ -90,7 +85,7 @@
 
     <div class="px-6 py-4 flex items-center justify-between bg-surface-container-low/20 border-t border-outline-variant/10">
         <p class="text-xs font-medium text-on-surface-variant">
-            Showing @startRecord to @endRecord of @Model.TotalRecords entries
+            Mostrando @startRecord a @endRecord de @Model.TotalRecords registros
         </p>
 
         <div class="flex items-center gap-1">
